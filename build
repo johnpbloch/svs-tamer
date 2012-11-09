@@ -1,3 +1,18 @@
 #!/bin/bash
 
-type -P uglifyjs  &>/dev/null  && continue  || { echo "Install UglifyJS (https://github.com/mishoo/UglifyJS) in order to minify JS"; exit 1; }
+type -P uglifyjs  &>/dev/null || { echo "Install UglifyJS (https://github.com/mishoo/UglifyJS) in order to minify JS"; exit 1; }
+
+if [ -e '/tmp/youtube-tamer' ]
+then
+	# Clean our tmp directory out
+	rm -r /tmp/youtube-tamer
+fi
+
+mkdir /tmp/youtube-tamer
+cp manifest.json /tmp/youtube-tamer/manifest.json
+uglifyjs youtube-tamer.js > /tmp/youtube-tamer/youtube-tamer.js
+
+current=`pwd`
+cd /tmp/
+zip -r "$current/youtube-tamer.zip" youtube-tamer
+cd $current
