@@ -2,17 +2,36 @@
 
 type -P uglifyjs  &>/dev/null || { echo "Install UglifyJS (https://github.com/mishoo/UglifyJS) in order to minify JS"; exit 1; }
 
-if [ -e '/tmp/youtube-tamer' ]
+if [ `uname` == 'Darwin' ]
 then
-	# Clean our tmp directory out
-	rm -r /tmp/youtube-tamer
+	chrome="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+elif [[ `which google-chrome` ]]
+then
+	chrome=`which google-chrome`
+elif [ -z $YOUTUBE_TAMER_CHROME ]
+then
+	chrome=$YOUTUBE_TAMER_CHROME
+else
+	echo "Export Chrome's executable binary as YOUTUBE_TAMER_CHROME and run again!"
+	exit 1
 fi
+
+chromeArgs="--pack-extension=/tmp/youtube-tamer"
+
+if [ -e './youtube-tamer.pem' ]
+then
+	chromeArgs="$chromeArgs --pack-extension-key=./youtube-tamer.pem"
+fi
+
+# Clean our tmp directory out
+rm -r /tmp/youtube-tamer 2>/dev/null
+rm /tmp/youtube-tamer.* 2>/dev/null
+rm youtube-tamer.zip youtube-tamer.crx 2>/dev/null
 
 mkdir /tmp/youtube-tamer
 cp manifest.json /tmp/youtube-tamer/manifest.json
-uglifyjs youtube-tamer.js > /tmp/youtube-tamer/youtube-tamer.js
+uglifyjs -nc youtube-tamer.js > /tmp/youtube-tamer/youtube-tamer.js
 
 current=`pwd`
-cd /tmp/
-zip -r "$current/youtube-tamer.zip" youtube-tamer
-cd $current
+"$chrome" $chromeArgs
+mv /tmp/youtube-tamer.crx $current
