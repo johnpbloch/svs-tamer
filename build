@@ -16,22 +16,24 @@ else
 	exit 1
 fi
 
-chromeArgs="--pack-extension=/tmp/youtube-tamer"
+chromeArgs="--pack-extension=/tmp/svs-tamer"
 
-if [ -e './youtube-tamer.pem' ]
+if [ -e './svs-tamer.pem' ]
 then
-	chromeArgs="$chromeArgs --pack-extension-key=./youtube-tamer.pem"
+	chromeArgs="$chromeArgs --pack-extension-key=./svs-tamer.pem"
 fi
 
 # Clean our tmp directory out
-rm -r /tmp/youtube-tamer 2>/dev/null
-rm /tmp/youtube-tamer.* 2>/dev/null
-rm youtube-tamer.zip youtube-tamer.crx 2>/dev/null
+rm -r /tmp/svs-tamer 2>/dev/null
+rm /tmp/svs-tamer.* 2>/dev/null
+rm svs-tamer.zip svs-tamer.crx 2>/dev/null
 
-mkdir /tmp/youtube-tamer
-cp manifest.json /tmp/youtube-tamer/manifest.json
-uglifyjs -nc youtube-tamer.js > /tmp/youtube-tamer/youtube-tamer.js
+mkdir /tmp/svs-tamer
+cp manifest.json /tmp/svs-tamer/manifest.json
+uglifyjs -nc svs-tamer.js > /tmp/svs-tamer/svs-tamer.js
 
 current=`pwd`
 "$chrome" $chromeArgs
-mv /tmp/youtube-tamer.crx $current
+mv /tmp/svs-tamer.crx $current
+cd /tmp
+zip -r "$current/svs-tamer.zip" svs-tamer
