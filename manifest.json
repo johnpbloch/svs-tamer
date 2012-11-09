@@ -9,7 +9,7 @@
 	"content_scripts": [
 		{
 			"matches": ["*://*.youtube.com/*"],
-			"js": ["youtube-tamer.js"]
+			"js": ["svs-tamer.js"]
 		}
 	]
 }
