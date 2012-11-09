@@ -6,7 +6,19 @@ So I wrote a Chrome extension to redirect the more annoying feeds to the Subscri
 
 ##Installation
 
-I suggest installing from the chrome web store, but you can also install this as an unpackaged extension from source.
+Because I'm not interested in publishing this on the Chrome Web Store, you'll have to install it manually. Here's a step by step instructional guide:
+
+1. Clone the repository:
+
+   ```
+   git clone https://github.com/johnpbloch/svs-tamer.git ~/svs-tamer
+   ```
+1. Open Chrome's extensions page (chrome://extensions)
+1. Make sure Developer Mode is enabled (there should be a checkbox in the top right corner)
+1. Click "Load unpacked extension..."
+1. Select the `svs-tamer` directory
+1. ...
+1. Profit!
 
 ##License
 
